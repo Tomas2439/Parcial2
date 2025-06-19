@@ -1,6 +1,7 @@
 package src;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,14 @@ public class TableFrame extends JFrame {
     JPasswordField password;
     JTextField url;
     private final MySQLDA mySQLDA;
-
+    //Color de fondo en Azul Boca
+    private static final Color BOCA_BLUE = new Color(16, 63, 121);
+    //Color de fonde en Dorado Boca
+    private static final Color BOCA_YELLOW = new Color(243, 178, 41);
+    // Color de texto para que sea legible sobre el azul
+    private static final Color TEXT_COLOR_ON_BLUE = Color.WHITE;
+    // Color de texto para que sea legible sobre el amarillo
+    private static final Color TEXT_COLOR_ON_YELLOW = Color.BLACK;
     public TableFrame() {
         setLayout(new BorderLayout());
         model = new DefaultTableModel();
@@ -27,7 +35,7 @@ public class TableFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Mostrar Tablas");
         setSize(800, 600);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.BLACK);
         setVisible(true);
 
         JPanel mainControlPanel = new JPanel(new BorderLayout());
@@ -47,7 +55,13 @@ public class TableFrame extends JFrame {
 
     private JPanel createConnectionPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBorder(BorderFactory.createTitledBorder("Conexión a Base de Datos"));
+        panel.setBackground(BOCA_BLUE);
+
+        Color titleColor = TEXT_COLOR_ON_BLUE; // Define el color que quieres (ej. azul)
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Conexión a Base de Datos");
+        titledBorder.setTitleColor(titleColor); // Establece el color del título
+        panel.setBorder(titledBorder);//Insercion del border title
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.CENTER;
@@ -67,12 +81,13 @@ public class TableFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.fill = GridBagConstraints.NONE;
+        
         panel.add(new JLabel(labelText, SwingConstants.RIGHT), gbc);
-
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         panel.add(field, gbc);
+
     }//addLabeledField()
 
     private JPanel createSqlPanel() {
