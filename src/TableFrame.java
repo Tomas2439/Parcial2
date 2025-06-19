@@ -17,6 +17,7 @@ public class TableFrame extends JFrame {
     JPasswordField password;
     JTextField url;
     private final MySQLDA mySQLDA;
+
     //Color de fondo en Azul Boca
     private static final Color BOCA_BLUE = new Color(16, 63, 121);
     //Color de fonde en Dorado Boca
@@ -25,6 +26,7 @@ public class TableFrame extends JFrame {
     private static final Color TEXT_COLOR_ON_BLUE = Color.WHITE;
     // Color de texto para que sea legible sobre el amarillo
     private static final Color TEXT_COLOR_ON_YELLOW = Color.BLACK;
+
     public TableFrame() {
         setLayout(new BorderLayout());
         model = new DefaultTableModel();
@@ -67,8 +69,16 @@ public class TableFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
         user = new JTextField("root", 15);
+        user.setBackground(BOCA_YELLOW);
+        user.setForeground(TEXT_COLOR_ON_YELLOW);
+
         password = new JPasswordField("", 15);
-        url = new JTextField("jdbc:mysql://localhost:3306/usuariosdb", 20);
+        password.setBackground(BOCA_YELLOW);
+        password.setForeground(TEXT_COLOR_ON_YELLOW);
+
+        url = new JTextField("jdbc:mysql://localhost:3306/usuariosdb", 15);
+        url.setBackground(BOCA_YELLOW);
+        url.setForeground(TEXT_COLOR_ON_YELLOW);
 
         addLabeledField(panel, gbc, 0, "Usuario:", user);
         addLabeledField(panel, gbc, 1, "Contraseña:", password);
@@ -81,8 +91,11 @@ public class TableFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.fill = GridBagConstraints.NONE;
+
+        JLabel customLabel = new JLabel(labelText, SwingConstants.RIGHT);
+        customLabel.setForeground(TEXT_COLOR_ON_BLUE);
+        panel.add(customLabel,gbc);
         
-        panel.add(new JLabel(labelText, SwingConstants.RIGHT), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -92,11 +105,21 @@ public class TableFrame extends JFrame {
 
     private JPanel createSqlPanel() {
         JPanel sqlPanel = new JPanel(new BorderLayout());
-        sqlPanel.setBorder(BorderFactory.createTitledBorder("Sentencia SQL"));
+        sqlPanel.setBackground(BOCA_BLUE);
+
+        Color titleColor = TEXT_COLOR_ON_BLUE; 
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Sentencia SQL");
+        titledBorder.setTitleColor(titleColor);
+        sqlPanel.setBorder(titledBorder);
 
         sqlStatementField = new JTextField("SELECT * FROM vewPersonasUsuarios");
+        sqlStatementField.setBackground(BOCA_YELLOW);
+        sqlStatementField.setForeground(TEXT_COLOR_ON_YELLOW);
+        sqlStatementField.setPreferredSize(new Dimension(650, 25));
+
         executeButton = new JButton("Ejecutar SQL");
-        executeButton.setPreferredSize(new Dimension(120, 25));
+        executeButton.setPreferredSize(new Dimension(120, 20));
+        
 
         JPanel sqlInputPanel = new JPanel(new BorderLayout());
         sqlInputPanel.add(sqlStatementField, BorderLayout.CENTER);
