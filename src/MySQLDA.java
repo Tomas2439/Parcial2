@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLDA {
-            // Recuerde que usuariosdb es la base de datos de MySQL.
-            // Modifíquela de acuerdo a la base de datos utilizada
-            //"jdbc:mysql://localhost:3306/usuariosdb";
     private String URL;  
     private String user;
     private String password;
@@ -33,12 +30,10 @@ public class MySQLDA {
         try {
             ResultSetMetaData metaData = resultSet.getMetaData();
             int nColumnas = metaData.getColumnCount();
-            // nColumnas  2 
             String[] encabezados = new String[nColumnas];
             for (int i = 0; i < nColumnas; i++) {
                 encabezados[i] = metaData.getColumnName(i+1);
             }
-            // encabezados ["nombre", "email"]
             resultado.add(encabezados);
             // Recorre sobre las filas de la tabla
             // para cargar cada registro en la lista
@@ -54,7 +49,7 @@ public class MySQLDA {
             System.err.println(e.getMessage());
         }
         return resultado;
-    }
+    }//convertirResultSet()
 
     public List<String[]> getQueryList(String consulta, List<Object> parametros) {
         List<String[]> resultado = null;
@@ -75,7 +70,7 @@ public class MySQLDA {
         return resultado;
     } // getQueryResult()
 
-    public int ejecutarSentencia(String consulta, List<Object> parametros) {
+    public int executeQuery(String consulta, List<Object> parametros) {
         int filasAfectadas = 0;
         try (Connection conn = this.getConnection();
             PreparedStatement sentencia = conn.prepareStatement(consulta)) {
@@ -89,7 +84,7 @@ public class MySQLDA {
             System.err.println("Error al ejecutar sentencia: " + e.getMessage());
         }
         return filasAfectadas;
-    }
+    }//executeQuery()
 
     public String getURL() {
         return URL;
@@ -117,3 +112,5 @@ public class MySQLDA {
     
     
 }
+
+
